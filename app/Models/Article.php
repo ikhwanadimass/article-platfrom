@@ -31,4 +31,17 @@ class Article extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        if (! $this->thumbnail) {
+            return null;
+        }
+
+        if (str_starts_with($this->thumbnail, 'data:') || str_starts_with($this->thumbnail, 'http://') || str_starts_with($this->thumbnail, 'https://')) {
+            return $this->thumbnail;
+        }
+
+        return asset('storage/'.$this->thumbnail);
+    }
 }

@@ -165,7 +165,7 @@
         <div class="self-stretch inline-flex justify-between items-center">
           <div class="inline-flex items-center gap-3">
             @if(Auth::user()->avatar)
-              <img id="mobileAvatarPreview" class="size-10 rounded-full object-cover outline outline-1 outline-zinc-200" src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" />
+              <img id="mobileAvatarPreview" class="size-10 rounded-full object-cover outline outline-1 outline-zinc-200" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" />
             @else
               <div id="mobileAvatarFallback" class="size-10 rounded-full bg-neutral-200 flex justify-center items-center text-neutral-700 font-bold text-sm">
                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
@@ -269,7 +269,7 @@
             
             <div class="self-stretch inline-flex justify-start items-center gap-6">
               @if(Auth::user()->avatar)
-                <img id="avatarPreview" class="size-16 rounded-[36px] object-cover outline outline-1 outline-zinc-200 shrink-0" src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" />
+                <img id="avatarPreview" class="size-16 rounded-[36px] object-cover outline outline-1 outline-zinc-200 shrink-0" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" />
               @else
                 <div id="avatarFallback" class="size-16 rounded-[36px] bg-neutral-200 flex justify-center items-center text-neutral-700 font-bold text-xl overflow-hidden shrink-0">
                   {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}

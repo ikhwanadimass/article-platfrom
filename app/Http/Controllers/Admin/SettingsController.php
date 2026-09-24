@@ -29,10 +29,23 @@ class SettingsController extends Controller
         $user = Auth::user();
 
         if ($request->hasFile('avatar')) {
-            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-                Storage::disk('public')->delete($user->avatar);
+            $file = $request->file('avatar');
+            if ($user->avatar && ! str_starts_with($user->avatar, 'data:') && Storage::disk('public')->exists($user->avatar)) {
+                try {
+                    Storage::disk('public')->delete($user->avatar);
+                } catch (\Throwable $e) {
+                    // Ignore deletion error
+                }
             }
-            $validated['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            try {
+                if (env('VERCEL') || ! is_writable(storage_path('app/public'))) {
+                    $validated['avatar'] = 'data:'.$file->getMimeType().';base64,'.base64_encode(file_get_contents($file->getRealPath()));
+                } else {
+                    $validated['avatar'] = $file->store('avatars', 'public');
+                }
+            } catch (\Throwable $e) {
+                $validated['avatar'] = 'data:'.$file->getMimeType().';base64,'.base64_encode(file_get_contents($file->getRealPath()));
+            }
         }
 
         $user->update($validated);

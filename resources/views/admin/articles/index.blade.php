@@ -148,7 +148,7 @@
       <div class="self-stretch inline-flex justify-between items-center w-full md:w-auto">
         <div class="inline-flex justify-start items-center gap-3 md:gap-4">
           @if(Auth::user()->avatar)
-            <img class="size-12 md:size-24 rounded-full object-cover shrink-0 outline outline-1 outline-zinc-200" src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" />
+            <img class="size-12 md:size-24 rounded-full object-cover shrink-0 outline outline-1 outline-zinc-200" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" />
           @else
             <div class="size-12 md:size-24 rounded-full bg-neutral-200 flex justify-center items-center overflow-hidden shrink-0 text-neutral-700 font-bold text-lg md:text-3xl">
               {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
@@ -219,7 +219,7 @@
           <div class="self-stretch p-3 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-zinc-300 flex flex-col justify-start items-start gap-2.5 shadow-xs">
             <div class="self-stretch inline-flex justify-start items-center gap-3">
               @if($article->thumbnail)
-                <img class="w-16 h-12 rounded-sm object-cover shrink-0" src="{{ asset('storage/' . $article->thumbnail) }}" alt="" />
+                <img class="w-16 h-12 rounded-sm object-cover shrink-0" src="{{ $article->thumbnail_url }}" alt="" />
               @else
                 <div class="w-16 h-12 rounded-sm bg-neutral-100 flex items-center justify-center text-neutral-400 shrink-0">
                   <svg class="size-5 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -279,7 +279,7 @@
           <div class="self-stretch px-6 py-4 border-b border-zinc-200 inline-flex justify-start items-center gap-4 hover:bg-neutral-50/70 transition">
             <div class="w-24 shrink-0">
               @if($article->thumbnail)
-                <img class="w-16 h-11 rounded-md object-cover" src="{{ asset('storage/' . $article->thumbnail) }}" alt="" />
+                <img class="w-16 h-11 rounded-md object-cover" src="{{ $article->thumbnail_url }}" alt="" />
               @else
                 <div class="w-16 h-11 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400">
                   <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

@@ -168,7 +168,7 @@
       <div class="self-stretch p-5 md:p-8 bg-white rounded-xl md:rounded-2xl outline outline-1 outline-offset-[-1px] outline-zinc-300 flex flex-col gap-4 md:gap-6 shadow-sm">
         <div class="flex items-center gap-4 md:gap-6">
           @if($user->avatar)
-            <img class="size-14 md:size-20 rounded-full object-cover shrink-0 outline outline-1 outline-zinc-200" src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}" />
+            <img class="size-14 md:size-20 rounded-full object-cover shrink-0 outline outline-1 outline-zinc-200" src="{{ $user->avatar_url }}" alt="{{ $user->name }}" />
           @else
             <div class="size-14 md:size-20 rounded-full bg-neutral-200 flex justify-center items-center text-neutral-700 font-bold text-lg md:text-2xl shrink-0">
               {{ strtoupper(substr($user->name, 0, 1)) }}
@@ -203,7 +203,7 @@
           <article class="self-stretch bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-zinc-300 flex flex-col justify-start items-start overflow-hidden shadow-sm hover:shadow-md transition">
             <a href="{{ route('blog.show', $article->slug) }}" class="self-stretch block overflow-hidden bg-neutral-100">
               @if($article->thumbnail)
-                <img class="self-stretch w-full h-48 md:h-72 object-cover hover:scale-[1.01] transition duration-300" src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" />
+                <img class="self-stretch w-full h-48 md:h-72 object-cover hover:scale-[1.01] transition duration-300" src="{{ $article->thumbnail_url }}" alt="{{ $article->title }}" />
               @else
                 <div class="self-stretch w-full h-48 md:h-60 bg-neutral-100 flex items-center justify-center text-neutral-400">
                   <svg class="size-10 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

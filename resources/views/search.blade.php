@@ -234,7 +234,7 @@
           @forelse($exploreArticles as $explore)
             <a href="{{ route('blog.show', $explore->slug) }}" class="self-stretch p-2.5 bg-white rounded-lg outline outline-1 outline-offset-[-1px] outline-zinc-300 inline-flex justify-start items-center gap-3 hover:bg-neutral-50 transition">
               @if($explore->thumbnail)
-                <img class="size-20 rounded-md object-cover shrink-0" src="{{ asset('storage/' . $explore->thumbnail) }}" alt="{{ $explore->title }}" />
+                <img class="size-20 rounded-md object-cover shrink-0" src="{{ $explore->thumbnail_url }}" alt="{{ $explore->title }}" />
               @else
                 <div class="size-20 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 shrink-0">
                   <svg class="size-6 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -264,7 +264,7 @@
           @forelse($exploreArticles as $explore)
             <a href="{{ route('blog.show', $explore->slug) }}" class="bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-zinc-300 flex flex-col justify-start items-start overflow-hidden hover:shadow-md transition group">
               @if($explore->thumbnail)
-                <img class="self-stretch h-48 w-full object-cover group-hover:scale-[1.01] transition" src="{{ asset('storage/' . $explore->thumbnail) }}" alt="{{ $explore->title }}" />
+                <img class="self-stretch h-48 w-full object-cover group-hover:scale-[1.01] transition" src="{{ $explore->thumbnail_url }}" alt="{{ $explore->title }}" />
               @else
                 <div class="self-stretch h-48 w-full bg-neutral-100 flex items-center justify-center text-neutral-400">
                   <svg class="size-8 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -309,7 +309,7 @@
           @foreach($articles as $article)
             <a href="{{ route('blog.show', $article->slug) }}" class="self-stretch p-2.5 bg-white rounded-lg outline outline-1 outline-offset-[-1px] outline-zinc-300 inline-flex justify-start items-center gap-3 hover:bg-neutral-50 transition">
               @if($article->thumbnail)
-                <img class="size-20 rounded-md object-cover shrink-0" src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" />
+                <img class="size-20 rounded-md object-cover shrink-0" src="{{ $article->thumbnail_url }}" alt="{{ $article->title }}" />
               @else
                 <div class="size-20 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 shrink-0">
                   <svg class="size-6 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -337,7 +337,7 @@
           @foreach($articles as $article)
             <a href="{{ route('blog.show', $article->slug) }}" class="bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-zinc-300 flex flex-col justify-start items-start overflow-hidden hover:shadow-md transition group">
               @if($article->thumbnail)
-                <img class="self-stretch h-48 w-full object-cover" src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" />
+                <img class="self-stretch h-48 w-full object-cover" src="{{ $article->thumbnail_url }}" alt="{{ $article->title }}" />
               @endif
               <div class="self-stretch p-5 flex flex-col gap-2">
                 <div class="flex justify-between items-center text-xs text-neutral-400">

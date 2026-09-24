@@ -165,7 +165,7 @@
       
       <!-- Thumbnail Image (Mobile h-52, Desktop h-96) -->
       @if($article->thumbnail)
-        <img class="self-stretch h-52 md:h-96 w-full object-cover rounded-lg" src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" />
+        <img class="self-stretch h-52 md:h-96 w-full object-cover rounded-lg" src="{{ $article->thumbnail_url }}" alt="{{ $article->title }}" />
       @else
         <div class="self-stretch h-52 md:h-96 w-full bg-neutral-100 rounded-lg flex items-center justify-center text-neutral-400">
           <svg class="size-12 md:size-16 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -180,7 +180,7 @@
       <div class="self-stretch pb-3 md:pb-4 border-b border-zinc-300 inline-flex justify-between items-center">
         <div class="flex justify-start items-center gap-2 md:gap-3">
           @if($article->author?->avatar)
-            <img class="size-8 md:size-10 rounded-full object-cover shrink-0 outline outline-1 outline-zinc-200" src="{{ asset('storage/' . $article->author->avatar) }}" alt="{{ $article->author->name }}" />
+            <img class="size-8 md:size-10 rounded-full object-cover shrink-0 outline outline-1 outline-zinc-200" src="{{ $article->author->avatar_url }}" alt="{{ $article->author->name }}" />
           @else
             <div class="size-8 md:size-10 rounded-full bg-neutral-200 flex justify-center items-center overflow-hidden shrink-0 text-neutral-700 font-bold text-xs md:text-sm">
               {{ strtoupper(substr($article->author->name ?? 'A', 0, 1)) }}

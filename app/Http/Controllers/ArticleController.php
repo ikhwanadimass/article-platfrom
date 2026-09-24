@@ -61,7 +61,16 @@ class ArticleController extends Controller
 
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+            $file = $request->file('thumbnail');
+            try {
+                if (env('VERCEL') || ! is_writable(storage_path('app/public'))) {
+                    $thumbnailPath = 'data:'.$file->getMimeType().';base64,'.base64_encode(file_get_contents($file->getRealPath()));
+                } else {
+                    $thumbnailPath = $file->store('thumbnails', 'public');
+                }
+            } catch (\Throwable $e) {
+                $thumbnailPath = 'data:'.$file->getMimeType().';base64,'.base64_encode(file_get_contents($file->getRealPath()));
+            }
         }
 
         $isDraft = $request->input('action') === 'draft';
@@ -120,10 +129,23 @@ class ArticleController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            if ($article->thumbnail && Storage::disk('public')->exists($article->thumbnail)) {
-                Storage::disk('public')->delete($article->thumbnail);
+            $file = $request->file('thumbnail');
+            if ($article->thumbnail && ! str_starts_with($article->thumbnail, 'data:') && Storage::disk('public')->exists($article->thumbnail)) {
+                try {
+                    Storage::disk('public')->delete($article->thumbnail);
+                } catch (\Throwable $e) {
+                    // Ignore deletion error in read-only environment
+                }
             }
-            $article->thumbnail = $request->file('thumbnail')->store('thumbnails', 'public');
+            try {
+                if (env('VERCEL') || ! is_writable(storage_path('app/public'))) {
+                    $article->thumbnail = 'data:'.$file->getMimeType().';base64,'.base64_encode(file_get_contents($file->getRealPath()));
+                } else {
+                    $article->thumbnail = $file->store('thumbnails', 'public');
+                }
+            } catch (\Throwable $e) {
+                $article->thumbnail = 'data:'.$file->getMimeType().';base64,'.base64_encode(file_get_contents($file->getRealPath()));
+            }
         }
 
         $isDraft = $request->input('action') === 'draft';

@@ -60,7 +60,7 @@
     <!-- Upload Hero Cover Image Box -->
     <label class="self-stretch p-6 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-sky-500 flex flex-col justify-center items-center gap-3 cursor-pointer hover:bg-sky-50/20 transition relative overflow-hidden">
       @if($article->thumbnail)
-        <img id="mobileImgPreview" class="absolute inset-0 w-full h-full object-cover" src="{{ asset('storage/' . $article->thumbnail) }}" alt="" />
+        <img id="mobileImgPreview" class="absolute inset-0 w-full h-full object-cover" src="{{ $article->thumbnail_url }}" alt="" />
       @else
         <img id="mobileImgPreview" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="" />
       @endif
@@ -95,7 +95,7 @@
       <div class="text-neutral-500 text-xs font-bold font-['Geist'] uppercase">Author</div>
       <div class="self-stretch px-3.5 py-2.5 bg-neutral-100 rounded-lg outline outline-1 outline-offset-[-1px] outline-zinc-300 inline-flex justify-start items-center gap-3">
         @if($article->author?->avatar)
-          <img class="size-6 rounded-full object-cover shrink-0" src="{{ asset('storage/' . $article->author->avatar) }}" alt="" />
+          <img class="size-6 rounded-full object-cover shrink-0" src="{{ $article->author->avatar_url }}" alt="" />
         @else
           <div class="size-6 rounded-full bg-neutral-300 flex items-center justify-center text-[10px] font-bold text-neutral-700">
             {{ strtoupper(substr($article->author->name ?? Auth::user()->name, 0, 1)) }}
@@ -263,7 +263,7 @@
         <!-- Left Image Area -->
         <div class="w-96 self-stretch p-8 bg-neutral-100 border-r border-zinc-300 flex flex-col justify-center items-center gap-4 relative shrink-0">
           @if($article->thumbnail)
-            <img id="imgPreview" class="absolute inset-0 w-full h-full object-cover" src="{{ asset('storage/' . $article->thumbnail) }}" alt="" />
+            <img id="imgPreview" class="absolute inset-0 w-full h-full object-cover" src="{{ $article->thumbnail_url }}" alt="" />
           @else
             <img id="imgPreview" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="" />
           @endif

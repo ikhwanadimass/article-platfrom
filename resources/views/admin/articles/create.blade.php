@@ -96,7 +96,7 @@
       <div class="text-neutral-500 text-xs font-bold font-['Geist'] uppercase">Author</div>
       <div class="self-stretch px-3.5 py-2.5 bg-neutral-100 rounded-lg outline outline-1 outline-offset-[-1px] outline-zinc-300 inline-flex justify-start items-center gap-3">
         @if(Auth::user()->avatar)
-          <img class="size-6 rounded-full object-cover shrink-0" src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="" />
+          <img class="size-6 rounded-full object-cover shrink-0" src="{{ Auth::user()->avatar_url }}" alt="" />
         @else
           <div class="size-6 rounded-full bg-neutral-300 flex items-center justify-center text-[10px] font-bold text-neutral-700">
             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}

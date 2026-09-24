@@ -177,7 +177,7 @@
             <!-- Article Image -->
             <a href="{{ route('blog.show', $article->slug) }}" class="self-stretch block overflow-hidden bg-neutral-100">
               @if($article->thumbnail)
-                <img class="self-stretch w-full h-48 md:h-80 object-cover hover:scale-[1.01] transition duration-300" src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" />
+                <img class="self-stretch w-full h-48 md:h-80 object-cover hover:scale-[1.01] transition duration-300" src="{{ $article->thumbnail_url }}" alt="{{ $article->title }}" />
               @else
                 <div class="self-stretch w-full h-48 md:h-80 bg-neutral-100 flex flex-col items-center justify-center text-neutral-400 gap-2">
                   <svg class="size-8 md:size-10 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -198,7 +198,7 @@
                 <!-- Author Info -->
                 <div class="flex justify-start items-center gap-1.5 md:gap-2">
                   @if($article->author?->avatar)
-                    <img class="size-4 md:size-6 rounded-full object-cover shrink-0" src="{{ asset('storage/' . $article->author->avatar) }}" alt="" />
+                    <img class="size-4 md:size-6 rounded-full object-cover shrink-0" src="{{ $article->author->avatar_url }}" alt="" />
                   @else
                     <div class="size-4 md:size-6 rounded-full bg-neutral-200 flex justify-center items-center overflow-hidden shrink-0 text-neutral-700 font-bold text-[8px] md:text-[10px]">
                       {{ strtoupper(substr($article->author->name ?? 'A', 0, 1)) }}
