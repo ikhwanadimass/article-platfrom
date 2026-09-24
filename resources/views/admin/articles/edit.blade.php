@@ -58,19 +58,22 @@
     @endif
 
     <!-- Upload Hero Cover Image Box -->
-    <label class="self-stretch p-6 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-sky-500 flex flex-col justify-center items-center gap-3 cursor-pointer hover:bg-sky-50/20 transition relative overflow-hidden">
+    <div id="dropzoneMobile" class="self-stretch p-6 bg-white rounded-xl outline outline-1 outline-offset-[-1px] outline-sky-500 flex flex-col justify-center items-center gap-3 transition relative overflow-hidden">
       @if($article->thumbnail)
         <img id="mobileImgPreview" class="absolute inset-0 w-full h-full object-cover" src="{{ $article->thumbnail_url }}" alt="" />
       @else
         <img id="mobileImgPreview" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="" />
       @endif
 
-      <div class="relative z-10 bg-white/90 backdrop-blur-xs p-3 rounded-xl flex flex-col items-center gap-1 shadow-xs">
-        <div class="text-neutral-800 text-xs font-bold font-['Geist']">Update cover image</div>
-        <div class="text-neutral-500 text-[10px] font-normal font-['Geist']">Tap to replace current photo</div>
+      <div class="relative z-10 bg-white/95 backdrop-blur-xs p-3.5 rounded-xl flex flex-col items-center gap-1.5 shadow-xs text-center border border-zinc-200">
+        <div class="text-neutral-800 text-xs font-bold font-['Geist']">Drag & drop or tap to replace photo</div>
+        <div class="text-neutral-400 text-[10px] font-normal font-['Geist']">PNG, JPG, WEBP up to 2MB</div>
+        <label class="mt-1 px-3.5 py-1.5 bg-sky-500 hover:bg-sky-600 text-white rounded-md text-xs font-bold cursor-pointer transition shadow-xs">
+          <span>Choose Image</span>
+          <input type="file" id="fileInputMobile" name="thumbnail" accept="image/*" class="hidden" onchange="previewMobileEditFile(this)">
+        </label>
       </div>
-      <input type="file" name="thumbnail" accept="image/*" class="hidden" onchange="previewMobileEditFile(this)">
-    </label>
+    </div>
 
     <!-- Article Title -->
     <div class="self-stretch flex flex-col justify-start items-start gap-1.5">
@@ -243,7 +246,7 @@
 
   <!-- Modal Center Container -->
   <main class="flex-1 self-stretch bg-neutral-900/40 min-h-screen inline-flex flex-col justify-center items-center py-10 px-4 overflow-y-auto">
-    <div class="w-[840px] max-w-full bg-white rounded-2xl shadow-[0px_12px_32px_0px_rgba(0,0,0,0.10)] flex flex-col justify-start items-start overflow-hidden">
+    <div class="w-[920px] max-w-[96vw] bg-white rounded-2xl shadow-[0px_12px_32px_0px_rgba(0,0,0,0.10)] flex flex-col justify-start items-start overflow-hidden">
       
       <!-- Modal Header -->
       <div class="self-stretch px-6 py-4 border-b border-zinc-300 inline-flex justify-between items-center">
@@ -261,37 +264,45 @@
         @method('PUT')
 
         <!-- Left Image Area -->
-        <div class="w-96 self-stretch p-8 bg-neutral-100 border-r border-zinc-300 flex flex-col justify-center items-center gap-4 relative shrink-0">
+        <div id="dropzoneDesktop" class="w-72 md:w-80 self-stretch p-6 bg-neutral-100 border-r border-zinc-300 flex flex-col justify-center items-center gap-4 relative shrink-0 transition">
           @if($article->thumbnail)
             <img id="imgPreview" class="absolute inset-0 w-full h-full object-cover" src="{{ $article->thumbnail_url }}" alt="" />
           @else
             <img id="imgPreview" class="hidden absolute inset-0 w-full h-full object-cover" src="" alt="" />
           @endif
 
-          <div class="relative z-10 bg-white/80 backdrop-blur-sm p-4 rounded-xl flex flex-col items-center gap-2 text-center shadow-sm">
-            <div class="text-xs font-semibold text-neutral-700 font-['Geist']">Update Cover Image</div>
-            <label class="px-4 py-2 bg-sky-500 hover:bg-sky-600 rounded-md inline-flex justify-start items-start text-white text-xs font-bold font-['Geist'] cursor-pointer transition shadow-sm">
+          <div class="relative z-10 bg-white/95 backdrop-blur-xs p-4 rounded-xl flex flex-col items-center gap-2 text-center shadow-xs border border-zinc-200">
+            <div class="size-10 flex items-center justify-center rounded-full bg-sky-50 text-sky-500 mb-0.5">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+              </svg>
+            </div>
+            <div class="text-xs font-bold text-neutral-800 font-['Geist']">Drag & drop photo here</div>
+            <div class="text-[11px] text-neutral-400 font-['Geist']">PNG, JPG, WEBP up to 2MB</div>
+            <label class="mt-1 px-4 py-2 bg-sky-500 hover:bg-sky-600 rounded-md inline-flex justify-start items-start text-white text-xs font-bold font-['Geist'] cursor-pointer transition shadow-xs">
               <span>Change Image</span>
-              <input type="file" name="thumbnail" accept="image/*" class="hidden" onchange="previewFile(this)">
+              <input type="file" id="fileInputDesktop" name="thumbnail" accept="image/*" class="hidden" onchange="previewFile(this)">
             </label>
           </div>
         </div>
 
         <!-- Right Inputs Area -->
-        <div class="flex-1 self-stretch p-6 flex flex-col justify-between items-start gap-4">
-          <div class="self-stretch flex flex-col justify-start items-start gap-3.5">
+        <div class="flex-1 min-w-0 self-stretch p-6 flex flex-col justify-between items-start gap-4">
+          <div class="self-stretch flex flex-col justify-start items-start gap-3.5 min-w-0">
             
             <!-- Article Title -->
-            <div class="self-stretch flex flex-col justify-start items-start gap-1.5">
+            <div class="self-stretch flex flex-col justify-start items-start gap-1.5 min-w-0">
               <label class="justify-start text-neutral-500 text-xs font-bold font-['Geist'] uppercase">Article Title</label>
-              <input type="text" name="title" value="{{ old('title', $article->title) }}" required class="self-stretch px-3 py-2.5 rounded-md outline outline-1 outline-offset-[-1px] outline-zinc-300 text-neutral-800 text-sm font-normal font-['Geist'] focus:outline-sky-500">
+              <input type="text" name="title" value="{{ old('title', $article->title) }}" required class="w-full px-3 py-2.5 rounded-md outline outline-1 outline-offset-[-1px] outline-zinc-300 text-neutral-800 text-sm font-normal font-['Geist'] focus:outline-sky-500">
             </div>
 
             <!-- Category & Author Row -->
-            <div class="self-stretch inline-flex justify-start items-start gap-4">
-              <div class="flex-1 inline-flex flex-col justify-start items-start gap-1.5">
+            <div class="w-full grid grid-cols-2 gap-4 min-w-0">
+              <div class="flex flex-col justify-start items-start gap-1.5 min-w-0">
                 <label class="justify-start text-neutral-500 text-xs font-bold font-['Geist'] uppercase">Category</label>
-                <select name="category_id" required class="self-stretch px-3 py-2.5 rounded-md outline outline-1 outline-offset-[-1px] outline-zinc-300 text-neutral-800 text-sm font-normal font-['Geist'] bg-white focus:outline-sky-500">
+                <select name="category_id" required class="w-full px-3 py-2.5 rounded-md outline outline-1 outline-offset-[-1px] outline-zinc-300 text-neutral-800 text-sm font-normal font-['Geist'] bg-white focus:outline-sky-500">
                   @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ old('category_id', $article->category_id) == $category->id ? 'selected' : '' }}>
                       {{ $category->name }}
@@ -300,24 +311,24 @@
                 </select>
               </div>
 
-              <div class="flex-1 inline-flex flex-col justify-start items-start gap-1.5">
+              <div class="flex flex-col justify-start items-start gap-1.5 min-w-0">
                 <label class="justify-start text-neutral-500 text-xs font-bold font-['Geist'] uppercase">Author</label>
-                <input type="text" value="{{ $article->author->name ?? Auth::user()->name }}" disabled class="self-stretch px-3 py-2.5 rounded-md outline outline-1 outline-offset-[-1px] outline-zinc-300 bg-neutral-50 text-neutral-800 text-sm font-normal font-['Geist']">
+                <input type="text" value="{{ $article->author->name ?? Auth::user()->name }}" disabled class="w-full px-3 py-2.5 rounded-md outline outline-1 outline-offset-[-1px] outline-zinc-300 bg-neutral-50 text-neutral-800 text-sm font-normal font-['Geist'] truncate">
               </div>
             </div>
 
             <!-- Content Area with interactive formatting toolbar -->
-            <div class="self-stretch flex flex-col justify-start items-start gap-1.5">
+            <div class="self-stretch flex flex-col justify-start items-start gap-1.5 min-w-0">
               <label class="justify-start text-neutral-500 text-xs font-bold font-['Geist'] uppercase">Article Content</label>
-              <div class="self-stretch rounded-md outline outline-1 outline-offset-[-1px] outline-zinc-300 flex flex-col justify-start items-start overflow-hidden">
-                <div class="self-stretch px-3 py-1.5 bg-neutral-100 border-b border-zinc-300 inline-flex justify-start items-center gap-2 text-neutral-600">
+              <div class="w-full rounded-md outline outline-1 outline-offset-[-1px] outline-zinc-300 flex flex-col justify-start items-start overflow-hidden">
+                <div class="self-stretch px-3 py-1.5 bg-neutral-100 border-b border-zinc-300 inline-flex justify-start items-center gap-2 text-neutral-600 flex-wrap">
                   <button type="button" onclick="formatDoc('bold')" class="font-bold text-xs hover:text-neutral-900 px-2 py-0.5 rounded hover:bg-neutral-200 transition" title="Bold">B</button>
                   <button type="button" onclick="formatDoc('italic')" class="italic text-xs hover:text-neutral-900 px-2 py-0.5 rounded hover:bg-neutral-200 transition" title="Italic">I</button>
                   <button type="button" onclick="formatDoc('underline')" class="underline text-xs hover:text-neutral-900 px-2 py-0.5 rounded hover:bg-neutral-200 transition" title="Underline">U</button>
                   <button type="button" onclick="formatDoc('insertUnorderedList')" class="text-xs hover:text-neutral-900 px-2 py-0.5 rounded hover:bg-neutral-200 transition" title="Bullet List">• List</button>
                   <button type="button" onclick="addLink()" class="text-xs hover:text-neutral-900 px-2 py-0.5 rounded hover:bg-neutral-200 transition" title="Insert Link">🔗 Link</button>
                 </div>
-                <div id="contentEditor" contenteditable="true" class="self-stretch min-h-[140px] max-h-[220px] p-3 text-neutral-800 text-sm font-normal font-['Geist'] outline-none overflow-y-auto focus:bg-neutral-50/30">{!! old('content', $article->content) !!}</div>
+                <div id="contentEditor" contenteditable="true" class="w-full min-h-[140px] max-h-[220px] p-3 text-neutral-800 text-sm font-normal font-['Geist'] outline-none overflow-y-auto overflow-x-hidden break-words focus:bg-neutral-50/30">{!! old('content', $article->content) !!}</div>
                 <textarea id="hiddenContent" name="content" class="hidden" required>{{ old('content', $article->content) }}</textarea>
               </div>
             </div>
@@ -325,18 +336,18 @@
           </div>
 
           <!-- Footer Actions -->
-          <div class="self-stretch inline-flex justify-between items-center pt-2">
-            <button type="submit" name="action" value="draft" onclick="syncContent()" class="px-3 py-1.5 rounded-md hover:bg-neutral-100 text-neutral-500 hover:text-neutral-800 text-xs font-semibold font-['Geist'] transition cursor-pointer flex items-center gap-1.5">
+          <div class="self-stretch inline-flex justify-between items-center pt-2 gap-4">
+            <button type="submit" name="action" value="draft" onclick="syncContent()" class="shrink-0 px-3 py-1.5 rounded-md hover:bg-neutral-100 text-neutral-500 hover:text-neutral-800 text-xs font-semibold font-['Geist'] transition cursor-pointer flex items-center gap-1.5">
               <svg class="size-3.5 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
                 <polyline points="17 21 17 13 7 13 7 21"/>
                 <polyline points="7 3 7 8 15 8"/>
               </svg>
-              <span>{{ $article->status === 'draft' ? 'Saved as Draft' : 'Save as Draft' }}</span>
+              <span>{{ $article->status === 'draft' ? 'Update Draft' : 'Save as Draft' }}</span>
             </button>
 
-            <button type="submit" name="action" value="publish" onclick="syncContent()" class="px-6 py-2.5 bg-sky-500 hover:bg-sky-600 rounded-md flex justify-start items-start text-white text-sm font-bold font-['Geist'] transition cursor-pointer shadow-sm">
-              Update & Publish
+            <button type="submit" name="action" value="publish" onclick="syncContent()" class="shrink-0 px-6 py-2.5 bg-sky-500 hover:bg-sky-600 rounded-md flex justify-start items-start text-white text-sm font-bold font-['Geist'] transition cursor-pointer shadow-sm">
+              {{ $article->status === 'draft' ? 'Publish Article' : 'Update & Publish' }}
             </button>
           </div>
         </div>
@@ -465,6 +476,43 @@
     document.getElementById('mobileEditAction').value = action;
     document.getElementById('mobileEditForm').submit();
   }
+
+  /* Drag and Drop File Upload */
+  function setupDragAndDrop(dropzoneId, inputId, previewCallback) {
+    const dropzone = document.getElementById(dropzoneId);
+    const input = document.getElementById(inputId);
+    if (!dropzone || !input) return;
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.add('ring-2', 'ring-sky-500', 'bg-sky-50/50');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.remove('ring-2', 'ring-sky-500', 'bg-sky-50/50');
+      }, false);
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files && files.length > 0) {
+        input.files = files;
+        previewCallback(input);
+      }
+    }, false);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setupDragAndDrop('dropzoneDesktop', 'fileInputDesktop', previewFile);
+    setupDragAndDrop('dropzoneMobile', 'fileInputMobile', previewMobileEditFile);
+  });
 </script>
 
 </body>
