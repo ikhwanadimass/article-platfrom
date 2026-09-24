@@ -2,6 +2,26 @@
 
 use Illuminate\Support\Str;
 
+$resolveSslCa = function (): ?string {
+    $ca = env('MYSQL_ATTR_SSL_CA');
+    if ($ca) {
+        if (file_exists($ca)) {
+            return $ca;
+        }
+        if (file_exists(base_path($ca))) {
+            return base_path($ca);
+        }
+    }
+    if (file_exists(base_path('certs/ca.pem'))) {
+        return base_path('certs/ca.pem');
+    }
+    if (file_exists('/etc/ssl/certs/ca-certificates.crt')) {
+        return '/etc/ssl/certs/ca-certificates.crt';
+    }
+
+    return null;
+};
+
 return [
 
     /*
@@ -59,7 +79,7 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA', file_exists(base_path('certs/ca.pem')) ? base_path('certs/ca.pem') : (file_exists('/etc/ssl/certs/ca-certificates.crt') ? '/etc/ssl/certs/ca-certificates.crt' : null)),
+                PDO::MYSQL_ATTR_SSL_CA => $resolveSslCa(),
                 PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('MYSQL_ATTR_SSL_VERIFY_SERVER_CERT', true),
             ], fn ($value) => ! is_null($value)) : [],
         ],
@@ -80,7 +100,7 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA', file_exists(base_path('certs/ca.pem')) ? base_path('certs/ca.pem') : (file_exists('/etc/ssl/certs/ca-certificates.crt') ? '/etc/ssl/certs/ca-certificates.crt' : null)),
+                PDO::MYSQL_ATTR_SSL_CA => $resolveSslCa(),
                 PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => env('MYSQL_ATTR_SSL_VERIFY_SERVER_CERT', true),
             ], fn ($value) => ! is_null($value)) : [],
         ],
